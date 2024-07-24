@@ -87,6 +87,14 @@
                    <table class="table-borderless mb-5" style="border-collapse: separate; border-spacing:0 10px;">
 					  <tbody class="mb-5">
 						<tr>
+							<td class="border-right border-bottom-0" style="width: 10%"><b>May. 2024</b></td>
+                            <td>Our paper <em>Scalable Temporal Motif Densest Subnetwork Discovery</a></em>, together with my mentors Fabio Vandin and Aristides Gionis, has been accepted at <a href="https://kdd2024.kdd.org/">KDD 2024</a> &#128526;, very excited to present such work in Barcelona!</td>	
+						</tr>
+						<tr>
+							<td class="border-right border-bottom-0" style="width: 10%"><b>May. 2024</b></td>
+                            <td>Our tutorial on <em><a href="https://miningtemporalnetworks.github.io/">Mining Temporal Networks</a></em> has been presented at <a href="https://www2024.thewebconf.org/">TheWebConference 2024</a> in Singapore! Great collaboration with my coauthors Lutz Oettershagen and Aristides Gionis!</td>	
+						</tr>
+						<tr>
 							<td class="border-right border-bottom-0" style="width: 10%"><b>Sep. 2023</b></td>
 							<td>I have been invited to the <a href="https://alacarte23.bici.events/">ALACARTE'23</a> workshop, to speak about my research in the field of clustering and related problems!</td>					
 						</tr>
@@ -138,6 +146,59 @@
                     <h2 class="mb-5">Publications</h2>
 					<p style="margin:-28px 0 15px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;">* denotes equal contribution</p>
 						<ul style="list-style-type: square;">
+							<li><p style="font-size: 20px">Scalable Temporal Motif Densest Subnetwork Discovery</p>
+								<p style="margin:-13px 0 5px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;"><span style="text-decoration: underline;">Ilie Sarpe</span>, Fabio Vandin, Aristides Gionis, <em>KDD 2024.</em></p>
+								<p style="line-height: 25px;">Resources: <a href="" target="_blank">Paper link</a>, <a href="https://arxiv.org/abs/2406.10608" target="_blank">arXiv</a>, <a href="https://github.com/iliesarpe/ALDENTE" target="_blank">code</a></br>
+                                <p><em>Check our teaser video below!</em></br>
+                                    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+                                    <div id="player"></div>
+                                    <script>
+                                      // 2. This code loads the IFrame Player API code asynchronously.
+                                      var tag = document.createElement('script');
+
+                                      tag.src = "https://www.youtube.com/iframe_api";
+                                      var firstScriptTag = document.getElementsByTagName('script')[0];
+                                      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                                      // 3. This function creates an <iframe> (and YouTube player)
+                                      //    after the API code downloads.
+                                      var player;
+                                      function onYouTubeIframeAPIReady() {
+                                        player = new YT.Player('player', {
+                                          height: '390',
+                                          width: '640',
+                                          videoId: 'mPejmM6HY3k?si=xMCaTyp-quIeEd98&autoplay=1&mute=1&enablejsapi=1',
+                                          playerVars: {
+                                            'playsinline': 1
+                                          },
+                                          events: {
+                                            'onReady': onPlayerReady,
+                                            'onStateChange': onPlayerStateChange
+                                          }
+                                        });
+                                      }
+
+                                      // 4. The API will call this function when the video player is ready.
+                                      function onPlayerReady(event) {
+                                        event.target.playVideo();
+                                      }
+
+                                      // 5. The API calls this function when the player's state changes.
+                                      //    The function indicates that when playing a video (state=1),
+                                      //    the player should play for six seconds and then stop.
+                                      var done = false;
+                                      function onPlayerStateChange(event) {
+                                        if (event.data == YT.PlayerState.PLAYING && !done) {
+                                          setTimeout(stopVideo, 6000);
+                                          done = true;
+                                        }
+                                      }
+                                      function stopVideo() {
+                                        player.stopVideo();
+                                      }
+                                    </script>
+                                </p>
+							</li>
 							<li><p style="font-size: 20px">ONBRA: Rigorous Estimation of the Temporal Betweenness Centrality in Temporal Networks</p>
 								<p style="margin:-13px 0 5px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;">Diego Santoro*, <span style="text-decoration: underline;">Ilie Sarpe</span>*, <em>WWW 2022.</em></p>
 								<p style="line-height: 25px;">Resources: <a href="https://dl.acm.org/doi/10.1145/3485447.3512204" target="_blank">Paper link</a>, <a href="https://github.com/iliesarpe/ONBRA" target="_blank">code</a></br></p>
