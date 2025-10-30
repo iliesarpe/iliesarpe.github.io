@@ -1,0 +1,14 @@
+---
+layout: standalone
+---
+
+{% comment %}
+This layout inherits global <head> and footer from default.html
+but removes the homepage sidebar and centers content.
+{% endcomment %}
+
+<div class="container mt-5 pt-5">
+  <main class="page-content mx-auto" style="max-width: 1000px;">
+    {{ content }}
+  </main>
+</div>

@@ -1,3 +1,7 @@
+---
+layout: default
+title: Home
+---
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -34,12 +38,162 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/academicons.min.css"/>
     </head>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  fetch('news.html')
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.text();
+    })
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const rows = doc.querySelectorAll('#all-news tbody tr');
+      const newsContainer = document.getElementById('news-container');
+      if (!newsContainer) return;
+
+      if (!rows || rows.length === 0) {
+        newsContainer.textContent = 'No news found.';
+        return;
+      }
+
+      // Create wrapper
+      const wrapper = document.createElement('div');
+      wrapper.setAttribute('aria-live', 'polite');
+
+      // iterate top 4 rows
+      Array.from(rows).slice(0,4).forEach(row => {
+        const dateCell = row.querySelector('td:first-child');
+        const contentCell = row.querySelector('td:last-child');
+        const dateHtml = dateCell ? dateCell.innerHTML.trim() : '';
+        const contentHtml = contentCell ? contentCell.innerHTML.trim() : '';
+
+        // create article container
+        const article = document.createElement('article');
+
+        // Inline styles for article (flex row, card look)
+        article.style.display = 'flex';
+        article.style.gap = '18px';
+        article.style.alignItems = 'flex-start';
+        article.style.background = '#ffffff';
+        article.style.borderRadius = '10px';
+        article.style.padding = '12px 16px';
+        article.style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)';
+        article.style.transition = 'transform .15s ease, box-shadow .15s ease';
+        article.style.marginBottom = '12px';
+        article.style.flexWrap = 'wrap'; // lets it wrap on narrow screens
+
+        // left column: date
+        const left = document.createElement('div');
+        left.className = 'home-news-date';
+        left.innerHTML = dateHtml;
+        left.style.flex = '0 0 110px';
+        left.style.maxWidth = '110px';
+        left.style.textAlign = 'right';
+        left.style.fontWeight = '700';
+        left.style.color = '#0d6efd';
+        left.style.paddingTop = '3px';
+        left.style.whiteSpace = 'nowrap';
+
+        // right column: content
+        const right = document.createElement('div');
+        right.className = 'home-news-content';
+        right.innerHTML = contentHtml;
+        right.style.flex = '1 1 0%';
+        right.style.color = '#333';
+        right.style.lineHeight = '1.45';
+        // ensure links inside right keep the color
+        right.querySelectorAll && right.querySelectorAll('a').forEach(a => {
+          a.style.color = '#0d6efd';
+          a.style.textDecoration = 'none';
+          a.style.borderBottom = '1px dashed rgba(13,110,253,0.28)';
+        });
+
+        article.appendChild(left);
+        article.appendChild(right);
+        wrapper.appendChild(article);
+      });
+
+      // Add a small responsive helper (inline) so date stacks above content on narrow widths
+      const respStyle = document.createElement('style');
+      respStyle.textContent = `
+        @media (max-width: 768px) {
+          .home-news-date { text-align: left !important; flex: 0 0 auto !important; max-width: none !important; margin-bottom: 6px !important; white-space: normal !important; }
+          article { padding: 10px 12px !important; }
+        }
+        /* Hover effect using class to keep inline JS simpler */
+        article:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+      `;
+      document.head.appendChild(respStyle);
+
+      newsContainer.innerHTML = '';
+      newsContainer.appendChild(wrapper);
+    })
+    .catch(err => {
+      console.error('Failed to load news:', err);
+      const newsContainer = document.getElementById('news-container');
+      if (newsContainer) newsContainer.textContent = 'Could not load latest news.';
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  fetch('{{ "/publications.html" | relative_url }}')
+    .then(response => response.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      const rows = doc.querySelectorAll('#all-publications tbody tr');
+      const container = document.getElementById('publications-container');
+
+      if (!rows.length) {
+        container.textContent = 'No publications found.';
+        return;
+      }
+
+      const topPublications = Array.from(rows).slice(0, 4);
+      const list = document.createElement('div');
+      list.className = 'pub-list';
+
+      topPublications.forEach(row => {
+        const year = row.querySelector('td:first-child')?.innerHTML || '';
+        const content = row.querySelector('td:last-child')?.innerHTML || '';
+
+        const item = document.createElement('div');
+        item.className = 'pub-card';
+        item.innerHTML = `
+          <div class="pub-year">${year}</div>
+          <div class="pub-content">${content}</div>
+        `;
+        list.appendChild(item);
+      });
+
+      container.innerHTML = '';
+      container.appendChild(list);
+    })
+    .catch(err => {
+      console.error('Failed to load publications:', err);
+      document.getElementById('publications-container').textContent = 'Could not load publications.';
+    });
+});
+</script>
+
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
             <a class="navbar-brand js-scroll-trigger" href="#page-top">
                 <span class="d-block d-lg-none">Ilie Sarpe</span>
+                <!--
                 <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/squarefoto.png" alt="" /></span>
+                -->
+                <span class="d-block text-center">
+                <img class="img-fluid img-profile rounded-circle mx-auto mb-2 profile-photo" 
+                       src="assets/img/squarefoto.png" 
+                       alt="Profile picture" />
+                </span>
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -47,6 +201,9 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#news">News</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#publications">Publications</a></li>
+                    <!--
+                    <li class="nav-item"><a class="nav-link" href="{{ '/projects/' | relative_url }}">Projects</a></li>
+                    -->
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#awards">Awards</a></li>
                 </ul>
@@ -55,6 +212,11 @@
 				<a class="social-icon" href="https://www.linkedin.com/in/iliesarpe"><i class="fab fa-linkedin"></i></a>
 				<a class="social-icon" href="https://github.com/iliesarpe"><i class="fab fa-github"></i></a>
 				<a class="social-icon" href="https://twitter.com/sa_ilie"><i class="fab fa-twitter"></i></a>
+                <a class="social-icon" href="https://bsky.app/profile/silie.bsky.social" target="_blank" aria-label="Bluesky">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 530" width="20" height="20" fill="currentColor">
+                <path d="M300 180c90-170 250-190 250-70 0 60-50 140-90 180 50 40 100 110 70 160s-90 40-160-20l-70-70-70 70c-70 60-130 80-160 20s20-120 70-160c-40-40-90-120-90-180 0-120 160-100 250 70z"/>
+              </svg>
+                </a>
 				<a class="social-icon" href="https://scholar.google.com/citations?user=qxTMYwwAAAAJ"><i class="ai ai-google-scholar ai-1x"></i></a>
 			</div>
         </nav>
@@ -84,58 +246,12 @@
             <section class="resume-section" id="news">
                 <div class="resume-section-content">
                     <h2 class="mb-5">News</h2>
-                   <table class="table-borderless mb-5" style="border-collapse: separate; border-spacing:0 10px;">
-					  <tbody class="mb-5">
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>May. 2024</b></td>
-                            <td>Our paper <em>Scalable Temporal Motif Densest Subnetwork Discovery</a></em>, together with my mentors Fabio Vandin and Aristides Gionis, has been accepted at <a href="https://kdd2024.kdd.org/">KDD 2024</a> &#128526;, very excited to present such work in Barcelona!</td>	
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>May. 2024</b></td>
-                            <td>Our tutorial on <em><a href="https://miningtemporalnetworks.github.io/">Mining Temporal Networks</a></em> has been presented at <a href="https://www2024.thewebconf.org/">TheWebConference 2024</a> in Singapore! Great collaboration with my coauthors Lutz Oettershagen and Aristides Gionis!</td>	
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Sep. 2023</b></td>
-							<td>I have been invited to the <a href="https://alacarte23.bici.events/">ALACARTE'23</a> workshop, to speak about my research in the field of clustering and related problems!</td>					
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Sep. 2023</b></td>
-							<td>I joined KTH to work with <a href="https://www.kth.se/profile/argioni">Prof. Aristides Gionis</a> and <a href="https://rebound-project.github.io/">his group</a> as a postdoctoral researcher &#127881;! So happy to work in such a research group and explore novel graph algorithms for social network analysis!</td>					
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Mar. 2023</b></td>
-							<td>I successfully defended my <a href="https://www.research.unipd.it/handle/11577/3472981" target="_blank">PhD Thesis</a> about novel algorithms for temporal networks!</td>					
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Oct. 2022</b></td>
-							<td>I joined <a href="https://www.kth.se/profile/argioni" target="_blank">Prof. Aristides Gionis</a> at KTH to work with him on novel algorithms for temporal networks!</td>					
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Aug. 2022</b></td>
-							<td>I will join the <a href="https://www.kdd.org/kdd2022/" target="_blank">KDD</a> conference in Washington DC, cannot wait to meet researchers in this commnunity and attend my first in person conferece!</td>					
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Feb. 2022</b></td>
-							<td>Our new work "<a href="https://dl.acm.org/doi/10.1145/3485447.3512204" target="_blank">ONBRA: Rigorous Estimation of the Temporal Betweenness Centrality in Temporal Networks</a>" in collaboration with my great colleague <a href="https://diegosantoro.github.io" target="_blank">Diego Santoro</a> is accepted at TheWebConference 2022 (WWW'22), I will join such community to present our work!</td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Aug. 2021</b></td>
-							<td>Our paper "<a href="https://arxiv.org/abs/2108.08734" target="_blank">odeN: Simultaneous Approximation of Multiple Motif Counts in Large Temporal Networks</a>" in collaboration with my advisor has been accepted at CIKM 2021, I am enthusiastic to present such work at this great conference!</td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Apr. 2021</b></td>
-							<td>I will be joining the <a href="https://www.siam.org/conferences/cm/conference/sdm21" target="_blank">SDM21</a> conference to present our accepted paper. So excited to meet and discuss with researchers from this community! </td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Dec. 2020</b></td>
-							<td>My first paper as a PhD student "<a href="https://arxiv.org/abs/2101.07152" target="_blank">PRESTO: Simple and Scalable Sampling Techniques for the Rigorous Approximation of Temporal Motif Counts</a>" has been accepted at SIAM SDM 2021, thanks to my supervisor for the great collaboration and for supporting me in this work!</td>
-						</tr>
-						<tr>
-							<td class="border-right border-bottom-0" style="width: 10%"><b>Oct. 2019</b></td>
-							<td>I got my 3 years PhD fellowship in Computer Engineering at <a href="https://www.dei.unipd.it/" target="_blank">DEI</a>, I will be supervised by Prof. Fabio Vandin, and work on "Efficient and Rigorous Techniques for the Analysis of Large Temporal Networks"!</td>
-						</tr>
-					  </tbody>
-					</table> 
+                    <!-- News container that will be dynamically filled -->
+                    <div id="news-container" class="mb-4">Loading latest news...</div>
+                    <!-- More News button -->
+                    <div class="text-center">
+                      <a href="news.html" class="btn btn-primary btn-sm">More news</a>
+                    </div>
                 </div>
             </section>
             <hr class="m-0" />
@@ -144,6 +260,8 @@
             <section class="resume-section" id="publications">
                 <div class="resume-section-content">
                     <h2 class="mb-5">Publications</h2>
+                    <td><strong>For an up-to-date list of my publications please refer to my <a href="https://scholar.google.com/citations?user=qxTMYwwAAAAJ">Scholar profile</a>.</strong><br><br>
+                    <!--
 					<p style="margin:-28px 0 15px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;">* denotes equal contribution</p>
 						<ul style="list-style-type: square;">
 							<li><p style="font-size: 20px">Scalable Temporal Motif Densest Subnetwork Discovery</p>
@@ -167,6 +285,11 @@
 								<p style="line-height: 25px;">Resources: <a href="https://arxiv.org/abs/2101.07152" target="_blank">Paper link</a>, <a href="https://github.com/VandinLab/PRESTO" target="_blank">code</a>, slides of the presentation coming soon..</br></p>
 							</li>
 						</ul>
+                    -->
+                    <div id="publications-container" class="mb-4">Loading publications...</div>
+                    <div class="text-center">
+                        <a href="{{ '/publications.html' | relative_url }}" class="btn btn-primary btn-sm">All publications</a>
+                    </div>
                 </div>
             </section>
             <hr class="m-0" />
@@ -256,6 +379,12 @@
                 <div class="resume-section-content">
                     <h2 class="mb-5">Awards & Fellowships</h2>
 							<ul style="list-style-type: square;">
+								<li><p style="font-size: 18px"><b>Outstanding reviewer</b> Jun. 2025.</p>
+									<p style="margin:-13px 0 5px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;">I was nominated as an outstanding reviewer for <a href="https://kdd2025.kdd.org/research-track-program-committee/" target="_blank">KDD 2025 (second cycle)</a> (top 10%)!</p>
+								</li>
+								<li><p style="font-size: 18px"><b>Bertinoro BICI travel fellowship</b> Sep. 2023.</p>
+									<p style="margin:-13px 0 5px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;">I got a travel fellowship to attend the <a href="https://alacarte23.bici.events/" target="_blank">ALACARTE'23</a> workshop, thanks to the organizers for inviting me!</p>
+								</li>
 								<li><p style="font-size: 18px"><b>SoBigData TNA Fellowship</b> Oct. 2022.</p>
 									<p style="margin:-13px 0 5px 0; padding-left: 0px; overflow-wrap: break-word; word-wrap: break-word; word-break:normal;">I got funded for my project proposal on novel algorithms for temporal networks. This allows me to join KTH and work with Prof. Aris Gionis. Thanks to <a href="http://www.sobigdata.eu/access/transnational" target="_blank">SoBigData TNA</a>!</p>
 								</li>
