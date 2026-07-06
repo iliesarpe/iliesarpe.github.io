@@ -1,1 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-11-01T07:39:51+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ilie Sarpe</title><subtitle>Projects and blog posts</subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-07-06T18:06:36+07:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Ilie Sarpe</title><subtitle>Projects and blog posts</subtitle><entry><title type="html">Hello, World!</title><link href="http://localhost:4000/2026/07/06/hello-world.html" rel="alternate" type="text/html" title="Hello, World!" /><published>2026-07-06T00:00:00+07:00</published><updated>2026-07-06T00:00:00+07:00</updated><id>http://localhost:4000/2026/07/06/hello-world</id><content type="html" xml:base="http://localhost:4000/2026/07/06/hello-world.html">&lt;p&gt;They say it is never too late, welcome to my blog!&lt;/p&gt;
+
+&lt;h2 id=&quot;why-a-blog&quot;&gt;Why a Blog?&lt;/h2&gt;
+
+&lt;p&gt;I think that, especially in academia, &lt;em&gt;writing&lt;/em&gt; is extremely important at all levels.
+Despite academic writing being a skill on its own, the underlying purpose of crystallizing thoughts while being minimal and highly informative is extremely fascinating to me.&lt;/p&gt;
+
+&lt;p&gt;On a side note, my decision to have a blog is to force myself to write more, and improve my writing skills!&lt;/p&gt;
+
+&lt;h2 id=&quot;content-ideas&quot;&gt;Content ideas&lt;/h2&gt;
+
+&lt;p&gt;I plan to write about:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Research&lt;/strong&gt;: research directions I find very interesting, about the works I read, reflections on my own work;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Technical results&lt;/strong&gt;: algorithms, and proofs that I truly find amazing;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;General thoughts&lt;/strong&gt;: it could be academic life, or more broad topics 🙂&lt;/li&gt;
+&lt;/ol&gt;</content><author><name></name></author><category term="misc" /><summary type="html">They say it is never too late, welcome to my blog!</summary></entry></feed>

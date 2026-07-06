@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TPQFKMT');</script>
+<!-- End Google Tag Manager -->
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WPWLS78MEH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-WPWLS78MEH');
+</script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blog | Ilie Sarpe</title>
+
+   <link rel="icon" type="image/x-icon" href="/assets/img/myicon.png" />
+
+  <link href="/css/vendor/bootstrap-resume.css" rel="stylesheet">
+  <link href="/css/custom.css" rel="stylesheet">
+  <script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$','$$'], ['\\[','\\]']]
+  },
+  options: {
+    enableAssistiveMml: true
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg-full.js"></script>
+
+</head>
+
+<body style="background-color:#f8f9fa; margin:0; padding:2rem 1rem;">
+
+  <!--
+  <header style="text-align:center; padding:2rem 1rem;">
+    <h1 style="margin-bottom:0.5rem;">Blog</h1>
+    
+    <hr style="max-width:200px; margin:1rem auto; border:1px solid #ddd;">
+  </header>
+  -->
+
+<main style="max-width:1000px; margin:0 auto; background:#fff; padding:40px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+  <h2 style="margin-bottom:1.5rem; font-size:1.8rem; font-weight:700; color:#1a1a2e;">Blog</h2>
+
+
+
+
+
+
+<div class="tag-filters" id="tag-filters">
+  <button class="tag-chip active" data-tag="all">All</button>
+  
+  <button class="tag-chip" data-tag="misc">misc</button>
+  
+</div>
+
+
+
+<ul class="blog-list" id="blog-list">
+  
+  <li class="blog-list-item" data-tags="misc">
+    <span class="blog-list-date">Jul 6, 2026</span>
+    <span class="blog-list-main">
+      <span class="blog-list-top">
+        <a href="/2026/07/06/hello-world.html" class="blog-list-link">Hello, World!</a>
+        
+        <span class="blog-post-tags">
+          <span class="blog-post-tag">misc</span>
+        </span>
+        
+      </span>
+      
+      <span class="blog-list-tldr">First post! An excuse to force myself to write more.</span>
+      
+      <span class="blog-list-readtime">
+        
+        
+        1 min read
+      </span>
+    </span>
+  </li>
+  
+</ul>
+
+
+<script>
+(function () {
+  const filters = document.getElementById('tag-filters');
+  const list    = document.getElementById('blog-list');
+  if (!filters || !list) return;
+
+  filters.addEventListener('click', function (e) {
+    const btn = e.target.closest('.tag-chip');
+    if (!btn) return;
+
+    filters.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+
+    const tag = btn.dataset.tag;
+    list.querySelectorAll('.blog-list-item').forEach(function (item) {
+      const tags = item.dataset.tags ? item.dataset.tags.split(' ') : [];
+      item.hidden = (tag !== 'all' && !tags.includes(tag));
+    });
+  });
+})();
+</script>
+
+</main>
+
+  <footer style="text-align:center; color:#999; font-size:0.9rem; margin:2rem 0;">
+    <a href="/" style="color:#0d6efd; text-decoration:none;">← Back to Home</a>
+  </footer>
+
+</body>
+</html>

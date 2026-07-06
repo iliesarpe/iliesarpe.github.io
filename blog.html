@@ -1,0 +1,76 @@
+---
+layout: standalone
+title: Blog
+---
+<h2 style="margin-bottom:1.5rem; font-size:1.8rem; font-weight:700; color:#1a1a2e;">Blog</h2>
+
+{% assign all_tags = "" | split: "" %}
+{% for post in site.posts %}
+  {% for tag in post.tags %}
+    {% unless all_tags contains tag %}
+      {% assign all_tags = all_tags | push: tag %}
+    {% endunless %}
+  {% endfor %}
+{% endfor %}
+{% assign all_tags = all_tags | sort %}
+
+{% if all_tags.size > 0 %}
+<div class="tag-filters" id="tag-filters">
+  <button class="tag-chip active" data-tag="all">All</button>
+  {% for tag in all_tags %}
+  <button class="tag-chip" data-tag="{{ tag }}">{{ tag }}</button>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if site.posts.size == 0 %}
+  <p style="color:#888; margin-top:1rem;">No posts yet — check back soon.</p>
+{% else %}
+<ul class="blog-list" id="blog-list">
+  {% for post in site.posts %}
+  <li class="blog-list-item" data-tags="{{ post.tags | join: ' ' }}">
+    <span class="blog-list-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+    <span class="blog-list-main">
+      <span class="blog-list-top">
+        <a href="{{ post.url | relative_url }}" class="blog-list-link">{{ post.title }}</a>
+        {% if post.tags.size > 0 %}
+        <span class="blog-post-tags">
+          {% for tag in post.tags %}<span class="blog-post-tag">{{ tag }}</span>{% endfor %}
+        </span>
+        {% endif %}
+      </span>
+      {% if post.tldr %}
+      <span class="blog-list-tldr">{{ post.tldr }}</span>
+      {% endif %}
+      <span class="blog-list-readtime">
+        {% assign read_min = post.content | number_of_words | divided_by: 200 %}
+        {% if read_min < 1 %}{% assign read_min = 1 %}{% endif %}
+        {{ read_min }} min read
+      </span>
+    </span>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<script>
+(function () {
+  const filters = document.getElementById('tag-filters');
+  const list    = document.getElementById('blog-list');
+  if (!filters || !list) return;
+
+  filters.addEventListener('click', function (e) {
+    const btn = e.target.closest('.tag-chip');
+    if (!btn) return;
+
+    filters.querySelectorAll('.tag-chip').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+
+    const tag = btn.dataset.tag;
+    list.querySelectorAll('.blog-list-item').forEach(function (item) {
+      const tags = item.dataset.tags ? item.dataset.tags.split(' ') : [];
+      item.hidden = (tag !== 'all' && !tags.includes(tag));
+    });
+  });
+})();
+</script>
