@@ -139,7 +139,7 @@ To provide you more intuition I generated a toy example where
 <details markdown="0">
 <summary>Full code to reproduce the plot above and play with it</summary>
 <div class="language-python highlighter-rouge" data-gh-src="https://raw.githubusercontent.com/iliesarpe/iliesarpe.github.io/master/scripts/posts/2026-07-10-silhouette/pps_demo.py">
-<div class="highlight"><pre class="highlight"><code>Loading from GitHub…</code></pre></div>
+<div class="highlight"><pre class="highlight"><code class="language-python">Loading from GitHub…</code></pre></div>
 </div>
 </details>
 

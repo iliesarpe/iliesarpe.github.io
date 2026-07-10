@@ -13,6 +13,7 @@
   <link href="{{ '/css/vendor/bootstrap-resume.css' | relative_url }}" rel="stylesheet">
   <link href="{{ '/css/syntax.css' | relative_url }}" rel="stylesheet">
   <link href="{{ '/css/custom.css' | relative_url }}" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github.min.css" rel="stylesheet">
   {% include mathjax.html %}
 </head>
 
@@ -54,6 +55,8 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/python.min.js"></script>
 <script>
 // ── Table of contents ────────────────────────────────────────────────────────
 (function () {
@@ -144,7 +147,10 @@
     if (!code) return;
     fetch(el.dataset.ghSrc)
       .then(res => { if (!res.ok) throw new Error(res.status); return res.text(); })
-      .then(text => { code.textContent = text; })
+      .then(text => {
+        code.textContent = text;
+        if (window.hljs) hljs.highlightElement(code);
+      })
       .catch(() => {
         // raw.githubusercontent.com/<user>/<repo>/<branch>/<path> -> github.com/<user>/<repo>/blob/<branch>/<path>
         const viewUrl = el.dataset.ghSrc.replace(
