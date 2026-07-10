@@ -134,6 +134,27 @@
     block.prepend(bar);
   });
 })();
+
+// ── Remote code snippets: fetch a file's raw content (e.g. from GitHub) into
+//    a placeholder block, so the post always shows the live source file
+//    instead of a copy that can drift out of sync ─────────────────────────────
+(function () {
+  document.querySelectorAll('[data-gh-src]').forEach(el => {
+    const code = el.querySelector('code');
+    if (!code) return;
+    fetch(el.dataset.ghSrc)
+      .then(res => { if (!res.ok) throw new Error(res.status); return res.text(); })
+      .then(text => { code.textContent = text; })
+      .catch(() => {
+        // raw.githubusercontent.com/<user>/<repo>/<branch>/<path> -> github.com/<user>/<repo>/blob/<branch>/<path>
+        const viewUrl = el.dataset.ghSrc.replace(
+          /raw\.githubusercontent\.com\/([^/]+)\/([^/]+)\/([^/]+)\//,
+          'github.com/$1/$2/blob/$3/'
+        );
+        code.textContent = `# Could not load the file from GitHub right now.\n# View it directly at: ${viewUrl}`;
+      });
+  });
+})();
 </script>
 
 </body>

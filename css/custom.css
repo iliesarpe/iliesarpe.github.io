@@ -586,6 +586,33 @@
   margin-bottom: 0.3rem;
 }
 
+.post-summary {
+  background: #f0faf6;
+  border-left: 3px solid var(--c3);
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1.2rem;
+  margin: 1.5rem 0;
+  color: #2f3a37;
+  font-size: 0.94rem;
+  line-height: 1.65;
+}
+
+.post-summary-label {
+  font-weight: 700;
+  color: var(--c3);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.post-summary p:last-child,
+.post-summary ul:last-child,
+.post-summary ol:last-child {
+  margin-bottom: 0;
+}
+
 .post-divider {
   border: none;
   border-top: 1px solid #eef0f3;
@@ -652,7 +679,8 @@
 .post-content blockquote p { margin-bottom: 0; }
 
 .post-content img {
-  max-width: 100%;
+  max-width: 600px;
+  width: 100%;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   margin: 2rem auto;

@@ -1,4 +1,8 @@
+.DS_Store
 .DS_STORE/
 Gemfile
 CLAUDE.md
 _junk/
+_site/
+.jekyll-cache/
+.jekyll-metadata
